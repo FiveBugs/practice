@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tacos.Ingredient;
+import tacos.Taco;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +21,8 @@ public class DesignTocoController {
     @GetMapping
     public String showDesignForm(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WARP),
-                new Ingredient("COTO", "Corn Tortilla", Ingredient.Type.WARP),
+                new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP),
+                new Ingredient("COTO", "Corn Tortilla", Ingredient.Type.WRAP),
                 new Ingredient("GRBF", "Ground Beef", Ingredient.Type.PROTEIN),
                 new Ingredient("CARN", "Carnitas", Ingredient.Type.PROTEIN),
                 new Ingredient("TMTO", "Diced Tomatoes", Ingredient.Type.VEGGIES),
@@ -37,9 +39,15 @@ public class DesignTocoController {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
 
-        //model.addAttribute("design", new Toco());
+        model.addAttribute("design", new Taco());
 
         return "design";
+    }
+
+    @PostMapping
+    public String processDesign(Taco design) {
+        log.info("processing design:" + design);
+        return "redirect:/orders/current";
     }
 
     private List<Ingredient> filterByType(List<Ingredient> ingredients, Ingredient.Type type) {
