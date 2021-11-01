@@ -1,2 +1,10 @@
-package com.pony.springboothelloworld.service;public class PrintService {
+package com.pony.springboothelloworld.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class PrintService {
+    public void printHello() {
+        System.out.println("hello,worlds");
+    }
 }
